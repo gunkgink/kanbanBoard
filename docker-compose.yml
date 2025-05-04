@@ -38,6 +38,6 @@ services:
         ports:
             - "5050:80" # pgAdmin will be accessible on port 5050
         depends_on:
-            - user-db
-            - board-db
-            - task-db
+            - user_db
+            - board_db
+            - task_db
