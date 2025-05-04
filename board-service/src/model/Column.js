@@ -9,34 +9,32 @@ class Column extends Model {
                     defaultValue: DataTypes.UUIDV4,
                     primaryKey: true,
                 },
+                title: {
+                    type: DataTypes.STRING,
+                    allowNull: false,
+                },
                 boardId: {
                     type: DataTypes.UUID,
                     allowNull: false,
                     references: {
-                        model: "Boards",
+                        model: "Board",
                         key: "id",
                     },
-                },
-                name: {
-                    type: DataTypes.STRING,
-                    allowNull: false,
-                },
-                position: {
-                    type: DataTypes.INTEGER,
-                    allowNull: false,
-                    defaultValue: 0,
                 },
             },
             {
                 sequelize,
                 modelName: "Column",
                 timestamps: true,
-                paranoid: true,
+                paranoid: true, // รองรับการลบแบบนุ่มนวล (soft delete)
             }
         );
     }
-}
 
-Column.belongsTo(Board, { foreignKey: "boardId" });
+    static associate(models) {
+        // ความสัมพันธ์ระหว่าง Column และ Board (Many-to-One)
+        Column.belongsTo(models.Board, { foreignKey: "boardId" });
+    }
+}
 
 module.exports = Column;

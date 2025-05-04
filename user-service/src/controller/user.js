@@ -13,34 +13,17 @@ exports.createUser = async (req, res) => {
             msg: "Create user succesfully",
         });
     } catch (error) {
-        console.error("Error creating user: ", error);
+        console.error(
+            "Error creating user:",
+            error.errors.map((e) => e.message).join(", ")
+        );
         res.status(500).json({
             success: false,
             message: "Server error",
         });
     }
 };
-exports.getUser = async (req, res) => {
-    try {
-        const user = await User.findByPk(req.user.id);
-        if (!user) {
-            return res.status(404).json({
-                success: false,
-                message: "User not found",
-            });
-        }
-        res.status(200).json({
-            success: true,
-            data: user,
-        });
-    } catch (error) {
-        console.error("Error fetching user: ", error);
-        res.status(500).json({
-            success: false,
-            message: "Server error",
-        });
-    }
-};
+
 exports.updateUser = async (req, res) => {
     const { name, email, password } = req.body;
     try {
@@ -60,7 +43,10 @@ exports.updateUser = async (req, res) => {
             data: user,
         });
     } catch (error) {
-        console.error("Error updating user: ", error);
+        console.error(
+            "Error updating user:",
+            error.errors.map((e) => e.message).join(", ")
+        );
         res.status(500).json({
             success: false,
             message: "Server error",
@@ -83,7 +69,10 @@ exports.deleteUser = async (req, res) => {
             message: "User deleted successfully",
         });
     } catch (error) {
-        console.error("Error deleting user: ", error);
+        console.error(
+            "Error deleting user:",
+            error.errors.map((e) => e.message).join(", ")
+        );
         res.status(500).json({
             success: false,
             message: "Server error",
@@ -98,7 +87,10 @@ exports.getAllUsers = async (req, res) => {
             data: users,
         });
     } catch (error) {
-        console.error("Error fetching users: ", error);
+        console.error(
+            "Error getting all user:",
+            error.errors.map((e) => e.message).join(", ")
+        );
         res.status(500).json({
             success: false,
             message: "Server error",
@@ -120,7 +112,10 @@ exports.getUserById = async (req, res) => {
             data: user,
         });
     } catch (error) {
-        console.error("Error fetching user: ", error);
+        console.error(
+            "Error getting user:",
+            error.errors.map((e) => e.message).join(", ")
+        );
         res.status(500).json({
             success: false,
             message: "Server error",

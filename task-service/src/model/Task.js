@@ -1,4 +1,6 @@
 const { DataTypes, Model } = require("sequelize");
+const User = require("../../../user-service/src/model/User");
+const Column = require("../../../board-service/src/model/Column");
 
 class Task extends Model {
     static initModel(sequelize) {
@@ -13,7 +15,15 @@ class Task extends Model {
                     type: DataTypes.UUID,
                     allowNull: false,
                     references: {
-                        model: "Columns",
+                        model: "Column",
+                        key: "id",
+                    },
+                },
+                UserId: {
+                    type: DataTypes.UUID,
+                    allowNull: false,
+                    references: {
+                        model: "User",
                         key: "id",
                     },
                 },
@@ -54,5 +64,6 @@ class Task extends Model {
 }
 
 Task.belongsTo(Column, { foreignKey: "columnId" });
+Task.belongsTo(User, { foreignKey: "userId" });
 
 module.exports = Task;

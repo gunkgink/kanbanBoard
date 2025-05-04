@@ -54,7 +54,18 @@ exports.register = async (req, res) => {
         // const token = user.getSignedJwtToken();
         sendTokenResponse(user, 201, res);
     } catch (error) {
-        console.error("Error creating user: ", error);
+        console.error("Registration Error:");
+        if (error.name === "SequelizeUniqueConstraintError") {
+            console.error(
+                "Unique constraint violation:",
+                error.errors.map((e) => e.message).join(", ")
+            );
+            return res.status(400).json({
+                success: false,
+                msg: "Email already exists. Please use a different one.",
+            });
+        }
+        console.error("Unexpected Error:", error.message);
         res.status(500).json({
             success: false,
             message: "Server error",
