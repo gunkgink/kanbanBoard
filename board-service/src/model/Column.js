@@ -38,6 +38,9 @@ class Column extends Model {
 
     static associate(models) {
         Column.belongsTo(models.Board, { foreignKey: "boardId" });
+        Column.hasMany(models.Task, {
+            foreignKey: "columnId",
+        });
     }
 }
 

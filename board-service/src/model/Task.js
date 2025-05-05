@@ -12,6 +12,10 @@ class Task extends Model {
                 columnId: {
                     type: DataTypes.UUID,
                     allowNull: false,
+                    references: {
+                        model: sequelize.models.Column,
+                        key: "id",
+                    },
                 },
                 UserId: {
                     type: DataTypes.UUID,
@@ -32,7 +36,6 @@ class Task extends Model {
                 status: {
                     type: DataTypes.STRING,
                     allowNull: false,
-                    defaultValue: "To Do",
                 },
                 assignee: {
                     type: DataTypes.UUID,
@@ -47,6 +50,11 @@ class Task extends Model {
                 paranoid: true,
             }
         );
+    }
+    static associate(models) {
+        Task.belongsTo(models.Column, {
+            foreignKey: "columnId",
+        });
     }
 }
 

@@ -19,16 +19,6 @@ services:
         ports:
             - "5431:5432" # Exposing Board DB on port 5433
 
-    task_db:
-        image: postgres:latest
-        container_name: task-db
-        environment:
-            POSTGRES_USER: postgres
-            POSTGRES_PASSWORD: password
-            POSTGRES_DB: task_db
-        ports:
-            - "5432:5432" # Exposing Task DB on port 5434
-
     pgadmin:
         image: dpage/pgadmin4
         restart: always

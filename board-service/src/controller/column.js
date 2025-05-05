@@ -51,7 +51,8 @@ exports.getColumnsByBoard = async (req, res) => {
 };
 exports.getColumnById = async (req, res) => {
     try {
-        const column = await Column.findByPk(req.params.id);
+        const { columnId } = req.params;
+        const column = await Column.findByPk(columnId);
         if (!column)
             return res
                 .status(404)
@@ -64,15 +65,16 @@ exports.getColumnById = async (req, res) => {
 };
 exports.updateColumn = async (req, res) => {
     try {
-        const column = await Column.findByPk(req.params.id);
+        const { columnId } = req.params;
+        const column = await Column.findByPk(columnId);
         if (!column)
             return res
                 .status(404)
                 .json({ success: false, message: "Column not found" });
 
-        const { name, position } = req.body;
-        if (name) column.name = name;
-        if (position !== undefined) column.position = position;
+        const { title, order } = req.body;
+        if (title) column.title = title;
+        if (order !== undefined) column.order = order;
 
         await column.save();
         res.status(200).json({ success: true, data: column });
@@ -83,7 +85,8 @@ exports.updateColumn = async (req, res) => {
 };
 exports.deleteColumn = async (req, res) => {
     try {
-        const column = await Column.findByPk(req.params.id);
+        const { columnId } = req.params;
+        const column = await Column.findByPk(columnId);
         if (!column)
             return res
                 .status(404)
