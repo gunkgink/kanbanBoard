@@ -1,6 +1,6 @@
-const jwt = require("jsonwebtoken");
-const User = require("../user-service/src/model/User");
-
+const axios = require("axios");
+require("dotenv").config();
+const user_api = "http://localhost:3003/api/me";
 exports.protect = async (req, res, next) => {
     let token;
     if (
@@ -8,33 +8,30 @@ exports.protect = async (req, res, next) => {
         req.headers.authorization.startsWith("Bearer")
     ) {
         token = req.headers.authorization.split(" ")[1];
-    } else if (req.cookies && req.cookies.token) {
+    } else if (req.cookies?.token) {
         token = req.cookies.token;
     }
 
     if (!token) {
-        return res.status(401).json({
-            success: false,
-            message: "Not authorized to access this route, no token",
-        });
+        return res.status(401).json({ success: false, message: "No token" });
     }
 
     try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        req.user = await User.findByPk(decoded.id);
-        if (!req.user) {
-            return res.status(404).json({
-                success: false,
-                message: "User not found",
-            });
-        }
+        const getmeUrl = user_api;
+        const response = await axios.get(getmeUrl, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+
+        req.user = response.data.data;
         next();
     } catch (error) {
-        console.error("Error in protect middleware: ", error);
-        res.status(401).json({
-            success: false,
-            message: "Not authorized to access this routee",
-        });
+        console.error("Error in protect middleware:", error.message);
+        // console.log(error);
+        return res
+            .status(401)
+            .json({ success: false, message: "Unauthorized" });
     }
 };
 exports.authorize = (...roles) => {

@@ -9,13 +9,9 @@ class Board extends Model {
                     defaultValue: DataTypes.UUIDV4,
                     primaryKey: true,
                 },
-                UserId: {
+                ownerId: {
                     type: DataTypes.UUID,
                     allowNull: false,
-                    references: {
-                        model: "User", // ผู้ใช้ที่เป็นเจ้าของบอร์ด
-                        key: "id",
-                    },
                 },
                 name: {
                     type: DataTypes.STRING,
@@ -30,26 +26,14 @@ class Board extends Model {
                 sequelize,
                 modelName: "Board",
                 timestamps: true,
-                paranoid: true, // รองรับการลบแบบนุ่มนวล (soft delete)
+                paranoid: true,
             }
         );
     }
 
     static associate(models) {
-        // ความสัมพันธ์ระหว่าง Board และ Column (One-to-Many)
         Board.hasMany(models.Column, { foreignKey: "boardId" });
-
-        // ความสัมพันธ์ระหว่าง Board และ User (Many-to-Many) ผ่าน BoardUser
-        Board.belongsToMany(models.User, {
-            through: models.BoardUser,
-            foreignKey: "boardId",
-        });
-
-        // ความสัมพันธ์ระหว่าง Board และ User (One-to-Many) เพื่อระบุเจ้าของบอร์ด
-        Board.belongsTo(models.User, {
-            foreignKey: "UserId",
-            as: "Owner",
-        });
+        Board.hasMany(models.BoardUser, { foreignKey: "boardId" });
     }
 }
 

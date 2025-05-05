@@ -1,6 +1,7 @@
 const { DataTypes, Model } = require("sequelize");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+// const BoardUser = require("../../../board-service/src/model/BoardUser");
 
 class User extends Model {
     getSignedJwtToken() {
@@ -37,12 +38,13 @@ class User extends Model {
                 role: {
                     type: DataTypes.STRING,
                     allowNull: false,
-                    defaultValue: "member",
+                    defaultValue: "user",
                 },
             },
             {
                 sequelize,
                 modelName: "User",
+                tableName: "Users",
                 hooks: {
                     beforeSave: async (user) => {
                         if (user.changed("password")) {
@@ -56,6 +58,12 @@ class User extends Model {
                 },
             }
         );
+    }
+    static associate(models) {
+        // User.belongsToMany(models.Board, {
+        //     through: models.BoardUser,
+        //     foreignKey: "userId",
+        // });
     }
 }
 

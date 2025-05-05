@@ -25,15 +25,17 @@ exports.createUser = async (req, res) => {
 };
 
 exports.updateUser = async (req, res) => {
-    const { name, email, password } = req.body;
+    const { name, email, password, role } = req.body;
     try {
-        const user = await User.findByPk(req.user.id);
+        const user = await User.findByPk(req.params.id);
         if (!user) {
             return res.status(404).json({
                 success: false,
                 message: "User not found",
             });
         }
+        if (role == "admin") user.role = role || user.role;
+
         user.name = name || user.name;
         user.email = email || user.email;
         user.password = password || user.password;
@@ -97,8 +99,39 @@ exports.getAllUsers = async (req, res) => {
         });
     }
 };
+exports.getUsersByIds = async (req, res) => {
+    const { userIds } = req.body;
+    console.log(req.body);
+
+    if (!Array.isArray(userIds) || userIds.length === 0) {
+        return res.status(400).json({
+            success: false,
+            message: "userIds must be a non-empty array",
+        });
+    }
+
+    try {
+        const users = await User.findAll({
+            where: {
+                id: userIds,
+            },
+        });
+
+        res.status(200).json({
+            success: true,
+            data: users,
+        });
+    } catch (error) {
+        console.error("Error getting users by IDs:", error.message);
+        res.status(500).json({
+            success: false,
+            message: "Server error",
+        });
+    }
+};
+
 exports.getUserById = async (req, res) => {
-    const { id } = req.params;
+    const id = req.params.id;
     try {
         const user = await User.findByPk(id);
         if (!user) {
@@ -112,10 +145,7 @@ exports.getUserById = async (req, res) => {
             data: user,
         });
     } catch (error) {
-        console.error(
-            "Error getting user:",
-            error.errors.map((e) => e.message).join(", ")
-        );
+        console.log("fuck");
         res.status(500).json({
             success: false,
             message: "Server error",

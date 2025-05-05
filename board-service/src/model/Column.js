@@ -13,11 +13,15 @@ class Column extends Model {
                     type: DataTypes.STRING,
                     allowNull: false,
                 },
+                order: {
+                    type: DataTypes.INTEGER,
+                    defaultValue: 0,
+                },
                 boardId: {
                     type: DataTypes.UUID,
                     allowNull: false,
                     references: {
-                        model: "Board",
+                        model: sequelize.models.Board,
                         key: "id",
                     },
                 },
@@ -25,14 +29,14 @@ class Column extends Model {
             {
                 sequelize,
                 modelName: "Column",
+                tableName: "Columns",
                 timestamps: true,
-                paranoid: true, // รองรับการลบแบบนุ่มนวล (soft delete)
+                paranoid: true,
             }
         );
     }
 
     static associate(models) {
-        // ความสัมพันธ์ระหว่าง Column และ Board (Many-to-One)
         Column.belongsTo(models.Board, { foreignKey: "boardId" });
     }
 }
