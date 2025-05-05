@@ -1,0 +1,780 @@
+{
+	"info": {
+		"_postman_id": "764b6a9c-63c9-4966-a854-17909c6fa457",
+		"name": "kanban_board",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "33702842"
+	},
+	"item": [
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "createUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"user\",\r\n    \"email\":\"user@gmail.com\",\r\n    \"password\":\"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/api/user"
+					},
+					"response": []
+				},
+				{
+					"name": "delUser",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/user/:id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"user",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getOneUser",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{AUTHENURL}}/api/user/:id",
+							"host": [
+								"{{AUTHENURL}}"
+							],
+							"path": [
+								"api",
+								"user",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "12ce7c9c-9e77-4cd3-9530-9718a358a2e5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllUser",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{AUTHENURL}}/api/user"
+					},
+					"response": []
+				},
+				{
+					"name": "updateUser",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "// {\r\n//     \"name\":\"nigga\",\r\n//     \"email\":\"nigga@gmail.com\",\r\n//     \"password\":\"password\"\r\n// }\r\n{\r\n    \"role\": \"user\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/api/user/:id",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"user",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "8eebc7a5-d7ba-4a27-bf34-97ae2b63cd4c"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getUsersByIds",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userIds\":[\"8eebc7a5-d7ba-4a27-bf34-97ae2b63cd4c\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{AUTHENURL}}/api/user/group"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "// {\r\n//     \"name\":\"admin\",\r\n//     \"email\":\"admin@gmail.com\",\r\n//     \"password\":\"password\",\r\n//     \"role\":\"admin\"\r\n// }\r\n{\r\n    \"name\":\"user1\",\r\n    \"email\":\"user1@gmail.com\",\r\n    \"password\":\"password\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{AUTHENURL}}/api/register"
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"admin@gmail.com\",\r\n    \"password\":\"password\"\r\n}\r\n// {\r\n//     \"email\":\"user@gmail.com\",\r\n//     \"password\":\"password\"\r\n// }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{AUTHENURL}}/api/login"
+					},
+					"response": []
+				},
+				{
+					"name": "getme",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{AUTHENURL}}/api/me"
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{AUTHENURL}}/api/logout"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "board",
+			"item": [
+				{
+					"name": "getAllBoard",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{BOARDURL}}/api/board"
+					},
+					"response": []
+				},
+				{
+					"name": "getOneBoard",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BOARDURL}}/api/board/:id",
+							"host": [
+								"{{BOARDURL}}"
+							],
+							"path": [
+								"api",
+								"board",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createBoard",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ownerId\":\"8eebc7a5-d7ba-4a27-bf34-97ae2b63cd4c\",\r\n    \"name\":\"board1\",\r\n    \"description\":\"testtesttest\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BOARDURL}}/api/board"
+					},
+					"response": []
+				},
+				{
+					"name": "delBoard",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BOARDURL}}/api/board/:id",
+							"host": [
+								"{{BOARDURL}}"
+							],
+							"path": [
+								"api",
+								"board",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateBoard",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BOARDURL}}/api/board/:id",
+							"host": [
+								"{{BOARDURL}}"
+							],
+							"path": [
+								"api",
+								"board",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "boardUser",
+			"item": [
+				{
+					"name": "addmember",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\":\"12ce7c9c-9e77-4cd3-9530-9718a358a2e5\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BOARDURL}}/api/board/user/:id",
+							"host": [
+								"{{BOARDURL}}"
+							],
+							"path": [
+								"api",
+								"board",
+								"user",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "4cb21ed6-5358-46ce-83c4-b009d740a0aa"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getUserInBoard",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BOARDURL}}/api/board/user/:id",
+							"host": [
+								"{{BOARDURL}}"
+							],
+							"path": [
+								"api",
+								"board",
+								"user",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "removeMember",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\":\"8eebc7a5-d7ba-4a27-bf34-97ae2b63cd4c\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BOARDURL}}/api/board/user/:boardId",
+							"host": [
+								"{{BOARDURL}}"
+							],
+							"path": [
+								"api",
+								"board",
+								"user",
+								":boardId"
+							],
+							"variable": [
+								{
+									"key": "boardId",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "column",
+			"item": [
+				{
+					"name": "createColumn",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    // \"name\": \"New 2Column Name\",\r\n    \"title\":\"todo\",\r\n    \"order\": 0\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BOARDURL}}/api/board/column/:columnId",
+							"host": [
+								"{{BOARDURL}}"
+							],
+							"path": [
+								"api",
+								"board",
+								"column",
+								":columnId"
+							],
+							"variable": [
+								{
+									"key": "columnId",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getColumnByBoard",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BOARDURL}}/api/board/column/byboard/:boardId",
+							"host": [
+								"{{BOARDURL}}"
+							],
+							"path": [
+								"api",
+								"board",
+								"column",
+								"byboard",
+								":boardId"
+							],
+							"variable": [
+								{
+									"key": "boardId",
+									"value": "d3e289b7-9f46-419d-8b7e-cb0679d79280"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateColumn",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\":\"title 0\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BOARDURL}}/api/board/column/:columnId",
+							"host": [
+								"{{BOARDURL}}"
+							],
+							"path": [
+								"api",
+								"board",
+								"column",
+								":columnId"
+							],
+							"variable": [
+								{
+									"key": "columnId",
+									"value": "8a59d2ab-8007-4481-a6f8-c565688b578f"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delColumn",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BOARDURL}}/api/board/column/:id",
+							"host": [
+								"{{BOARDURL}}"
+							],
+							"path": [
+								"api",
+								"board",
+								"column",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reorderColumn",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"columnOrder\": [ \"8a59d2ab-8007-4481-a6f8-c565688b578f\",\"66094ecd-42ab-4429-a355-ca08599d9f4b\",\"f8353145-fa93-439e-a218-118b4a16b6b8\"]\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BOARDURL}}/api/board/column/reorder/:id",
+							"host": [
+								"{{BOARDURL}}"
+							],
+							"path": [
+								"api",
+								"board",
+								"column",
+								"reorder",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "d3e289b7-9f46-419d-8b7e-cb0679d79280"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getColumnById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BOARDURL}}/api/board/column/:id",
+							"host": [
+								"{{BOARDURL}}"
+							],
+							"path": [
+								"api",
+								"board",
+								"column",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "task",
+			"item": [
+				{
+					"name": "createTask",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"columnId\": \"e6eba442-4f8b-4662-a5c9-ecc47ce4cb3c\",\r\n    \"title\": \"Complete task management API\",\r\n    \"description\": \"Finish writing all routes for task management\",\r\n    \"dueDate\": \"2025-05-10T12:00:00Z\",\r\n    \"assignee\": \"8eebc7a5-d7ba-4a27-bf34-97ae2b63cd4c\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{BOARDURL}}/api/board/task"
+					},
+					"response": []
+				},
+				{
+					"name": "getTaskbyId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BOARDURL}}/api/board/task/:id",
+							"host": [
+								"{{BOARDURL}}"
+							],
+							"path": [
+								"api",
+								"board",
+								"task",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getTaskByColumn",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "updateTask",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"columnId\":\"35c1ce3c-4926-4067-a4e9-8930830f9010\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BOARDURL}}/api/board/task/:taskId",
+							"host": [
+								"{{BOARDURL}}"
+							],
+							"path": [
+								"api",
+								"board",
+								"task",
+								":taskId"
+							],
+							"variable": [
+								{
+									"key": "taskId",
+									"value": "73848afe-9ae8-4ace-9ba2-d063ad9eb86f"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delTask",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BOARDURL}}/api/board/task/:taskId",
+							"host": [
+								"{{BOARDURL}}"
+							],
+							"path": [
+								"api",
+								"board",
+								"task",
+								":taskId"
+							],
+							"variable": [
+								{
+									"key": "taskId",
+									"value": "9e8a4c1d-f5a0-4cb6-b95d-5adc8e428973"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getTaskByUser",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BOARDURL}}/api/board/task/:userId/user",
+							"host": [
+								"{{BOARDURL}}"
+							],
+							"path": [
+								"api",
+								"board",
+								"task",
+								":userId",
+								"user"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "8eebc7a5-d7ba-4a27-bf34-97ae2b63cd4c"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "AUTHENURL",
+			"value": "http://localhost:3001",
+			"type": "string"
+		},
+		{
+			"key": "BOARDURL",
+			"value": "http://localhost:3003",
+			"type": "string"
+		}
+	]
+}
