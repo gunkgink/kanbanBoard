@@ -7,6 +7,7 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 initDb();
+
 const userRoutes = require("./src/route/user");
 app.use("/api/user", userRoutes);
 

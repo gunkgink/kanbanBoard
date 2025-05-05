@@ -5,7 +5,7 @@ const BoardUser = require("../model/BoardUser");
 exports.addMember = async (req, res) => {
     console.log(req.body);
 
-    const boardId = req.params.id;
+    const { boardId } = req.params;
     const { userId } = req.body;
     // console.log(boardId, userId);
 
@@ -72,8 +72,7 @@ exports.removeMember = async (req, res) => {
     }
 };
 exports.getUserInBoard = async (req, res) => {
-    const boardId = req.params.id;
-    // console.log(req.params);
+    const { boardId } = req.params;
 
     try {
         const boardUsers = await BoardUser.findAll({
@@ -89,7 +88,7 @@ exports.getUserInBoard = async (req, res) => {
         console.log(userIds);
 
         const api = `${process.env.USER_API}/api/user/group`;
-        // const api = "http://localhost:3003/api/user/group";
+
         console.log(api);
         const response = await axios.post(
             api,

@@ -1,5 +1,6 @@
 const User = require("../model/User");
 const ms = require("ms");
+
 const sendTokenResponse = (user, statusCode, res) => {
     const token = user.getSignedJwtToken();
     const options = {
@@ -12,14 +13,40 @@ const sendTokenResponse = (user, statusCode, res) => {
         token,
     });
 };
+// utils/validators.js
+const validateRegisterInput = (name, email, password) => {
+    const errors = [];
+
+    if (!name || name.trim().length < 2) {
+        errors.push("Name must be at least 2 characters");
+    }
+
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        errors.push("Valid email is required");
+    }
+
+    if (!password || password.length < 6) {
+        errors.push("Password must be at least 6 characters");
+    }
+
+    return {
+        isValid: errors.length === 0,
+        errors,
+    };
+};
 
 exports.login = async (req, res) => {
-    const { email, password } = req.body;
-    if (!email || !password)
+    const { name, email, password } = req.body;
+    if (name || !email || !password)
         return res.status().json({
             success: false,
             msg: "Please provide email and password",
         });
+
+    // For easy testing
+    // const { valid, error } = validateRegisterInput(name, email, password);
+    // if (!valid) return res.status(400).json({ success: false, message: error });
+
     const user = await User.findOne({ where: { email } });
     if (!user) {
         return res.status(401).json({
@@ -34,7 +61,7 @@ exports.login = async (req, res) => {
             msg: "Invalid credentials",
         });
     }
-    // const token = user.getSignedJwtToken();
+
     sendTokenResponse(user, 200, res);
 };
 exports.register = async (req, res) => {
@@ -51,15 +78,12 @@ exports.register = async (req, res) => {
             email,
             password,
         });
-        // const token = user.getSignedJwtToken();
+
         sendTokenResponse(user, 201, res);
     } catch (error) {
         console.error("Registration Error:");
         if (error.name === "SequelizeUniqueConstraintError") {
-            console.error(
-                "Unique constraint violation:",
-                error.errors.map((e) => e.message).join(", ")
-            );
+            console.error("Unique constraint violation:", error.message);
             return res.status(400).json({
                 success: false,
                 msg: "Email already exists. Please use a different one.",
@@ -80,7 +104,7 @@ exports.getMe = async (req, res) => {
             data: user,
         });
     } catch (error) {
-        console.error("Error fetching user: ", error);
+        console.error("Error fetching user: ", error.message);
         res.status(500).json({
             success: false,
             message: "Server error",
@@ -95,6 +119,6 @@ exports.logout = async (req, res) => {
     });
     res.status(200).json({
         success: true,
-        msg: "Logged out successfully",
+        message: "Logged out successfully",
     });
 };

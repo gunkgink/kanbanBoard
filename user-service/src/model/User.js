@@ -1,7 +1,6 @@
 const { DataTypes, Model } = require("sequelize");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-// const BoardUser = require("../../../board-service/src/model/BoardUser");
 
 class User extends Model {
     getSignedJwtToken() {
@@ -58,12 +57,6 @@ class User extends Model {
                 },
             }
         );
-    }
-    static associate(models) {
-        // User.belongsToMany(models.Board, {
-        //     through: models.BoardUser,
-        //     foreignKey: "userId",
-        // });
     }
 }
 

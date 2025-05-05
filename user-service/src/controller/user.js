@@ -10,13 +10,10 @@ exports.createUser = async (req, res) => {
 
         res.status(201).json({
             success: true,
-            msg: "Create user succesfully",
+            data: user,
         });
     } catch (error) {
-        console.error(
-            "Error creating user:",
-            error.errors.map((e) => e.message).join(", ")
-        );
+        console.error("Error creating user:", error.message);
         res.status(500).json({
             success: false,
             message: "Server error",
@@ -26,8 +23,9 @@ exports.createUser = async (req, res) => {
 
 exports.updateUser = async (req, res) => {
     const { name, email, password, role } = req.body;
+    const { userId } = req.params;
     try {
-        const user = await User.findByPk(req.params.id);
+        const user = await User.findByPk(userId);
         if (!user) {
             return res.status(404).json({
                 success: false,
@@ -45,10 +43,7 @@ exports.updateUser = async (req, res) => {
             data: user,
         });
     } catch (error) {
-        console.error(
-            "Error updating user:",
-            error.errors.map((e) => e.message).join(", ")
-        );
+        console.error("Error updating user:", error.message);
         res.status(500).json({
             success: false,
             message: "Server error",
@@ -56,9 +51,9 @@ exports.updateUser = async (req, res) => {
     }
 };
 exports.deleteUser = async (req, res) => {
-    console.log(req.params.id);
+    const { userId } = req.params;
     try {
-        const user = await User.findByPk(req.params.id);
+        const user = await User.findByPk(userId);
         if (!user) {
             return res.status(404).json({
                 success: false,
@@ -71,10 +66,7 @@ exports.deleteUser = async (req, res) => {
             message: "User deleted successfully",
         });
     } catch (error) {
-        console.error(
-            "Error deleting user:",
-            error.errors.map((e) => e.message).join(", ")
-        );
+        console.error("Error deleting user:", error.message);
         res.status(500).json({
             success: false,
             message: "Server error",
@@ -89,10 +81,7 @@ exports.getAllUsers = async (req, res) => {
             data: users,
         });
     } catch (error) {
-        console.error(
-            "Error getting all user:",
-            error.errors.map((e) => e.message).join(", ")
-        );
+        console.error("Error getting all user:", error.message);
         res.status(500).json({
             success: false,
             message: "Server error",
@@ -131,9 +120,9 @@ exports.getUsersByIds = async (req, res) => {
 };
 
 exports.getUserById = async (req, res) => {
-    const id = req.params.id;
+    const { userId } = req.params;
     try {
-        const user = await User.findByPk(id);
+        const user = await User.findByPk(userId);
         if (!user) {
             return res.status(404).json({
                 success: false,
@@ -145,7 +134,7 @@ exports.getUserById = async (req, res) => {
             data: user,
         });
     } catch (error) {
-        console.log("fuck");
+        console.log(error.message);
         res.status(500).json({
             success: false,
             message: "Server error",

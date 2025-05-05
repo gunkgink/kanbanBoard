@@ -10,11 +10,17 @@ const {
 } = require("../controller/user");
 const { protect } = require("../../../middleware/middleware");
 router.use(protect);
+
 router.post("/", createUser);
+
 router.get("/", getAllUsers);
-router.get("/:id", getUserById);
-router.post("/group", getUsersByIds);
-router.put("/:id", updateUser);
-router.delete("/:id", deleteUser);
+
+router.get("/:userId", getUserById);
+
+router.post("/userids", getUsersByIds);
+
+router.put("/:userId", updateUser);
+
+router.delete("/:userId", deleteUser);
 
 module.exports = router;

@@ -9,10 +9,15 @@ const {
     deleteBoard,
 } = require("../controller/board");
 router.use(protect);
-router.get("/:id", getBoardById);
+
+router.get("/:boardId", getBoardById);
+
 router.get("/", protect, getAllBoard);
+
 router.post("/", protect, createBoard);
-router.delete("/:id", deleteBoard);
-router.put("/:id", updateBoard);
+
+router.delete("/:boardId", deleteBoard);
+
+router.put("/:boardId", updateBoard);
 
 module.exports = router;

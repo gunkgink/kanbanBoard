@@ -54,16 +54,16 @@ exports.createBoard = async (req, res) => {
 
 exports.getBoardById = async (req, res) => {
     try {
-        const { id } = req.params;
+        const { boardId } = req.params;
 
-        if (!id) {
+        if (!boardId) {
             return res.status(400).json({
                 success: false,
                 msg: "Board ID is required",
             });
         }
 
-        const board = await Board.findByPk(id, {
+        const board = await Board.findByPk(boardId, {
             include: [
                 {
                     model: Column,
@@ -97,16 +97,9 @@ exports.getBoardById = async (req, res) => {
     }
 };
 
-// exports.getAllBoard = async (req, res) => {
-//     return res.status(200).json({
-//         success: true,
-//         msg: "getAll",
-//     });
-// };
 exports.getAllBoard = async (req, res) => {
     try {
-        // console.log(req.user);
-        const userId = req.user.id; // adjust depending on where you store auth info
+        const userId = req.user.id;
         const role = req.user.role;
         if (!userId) {
             return res.status(400).json({
@@ -148,10 +141,10 @@ exports.getAllBoard = async (req, res) => {
 
 exports.updateBoard = async (req, res) => {
     try {
-        const id = req.params.id;
+        const { boardId } = req.params;
         const { name, description, ownerId } = req.body;
 
-        const board = await Board.findByPk(id);
+        const board = await Board.findByPk(boardId);
 
         if (!board) {
             return res.status(404).json({
@@ -173,7 +166,7 @@ exports.updateBoard = async (req, res) => {
         console.error("Update board error:", err);
         return res.status(500).json({
             success: false,
-            msg: "Server error",
+            message: "Server error",
             error: err.message,
         });
     }
@@ -181,9 +174,9 @@ exports.updateBoard = async (req, res) => {
 
 exports.deleteBoard = async (req, res) => {
     try {
-        const { id } = req.params;
+        const { boardId } = req.params;
 
-        const board = await Board.findByPk(id);
+        const board = await Board.findByPk(boardId);
 
         if (!board) {
             return res.status(404).json({
@@ -196,7 +189,7 @@ exports.deleteBoard = async (req, res) => {
 
         return res.status(200).json({
             success: true,
-            msg: "Board deleted successfully",
+            message: "Board deleted success",
         });
     } catch (err) {
         console.error("Delete board error:", err);
